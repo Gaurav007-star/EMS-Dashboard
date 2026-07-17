@@ -1,0 +1,75 @@
+export const DEPARTMENTS: Record<string, string[]> = {
+  'Engineering': [
+    'Software Engineer',
+    'Senior Software Engineer',
+    'Lead Engineer',
+    'Engineering Manager',
+    'QA Engineer',
+    'DevOps Engineer',
+    'Data Engineer',
+    'System Architect',
+  ],
+  'Product': [
+    'Product Manager',
+    'Senior Product Manager',
+    'Product Owner',
+    'Business Analyst',
+    'UX Researcher',
+  ],
+  'Design': [
+    'UI/UX Designer',
+    'Senior Designer',
+    'Graphic Designer',
+    'Design Lead',
+  ],
+  'Marketing': [
+    'Marketing Manager',
+    'Digital Marketing Specialist',
+    'Content Writer',
+    'SEO Specialist',
+    'Brand Strategist',
+  ],
+  'Sales': [
+    'Sales Executive',
+    'Sales Manager',
+    'Account Executive',
+    'Business Development Executive',
+    'Regional Sales Lead',
+  ],
+  'Human Resources': [
+    'HR Manager',
+    'HR Executive',
+    'Recruiter',
+    'Training Specialist',
+    'HR Generalist',
+  ],
+  'Finance': [
+    'Accountant',
+    'Financial Analyst',
+    'Finance Manager',
+    'Auditor',
+    'Accounts Payable Specialist',
+  ],
+  'Operations': [
+    'Operations Manager',
+    'Operations Analyst',
+    'Logistics Coordinator',
+    'Procurement Specialist',
+    'Facilities Manager',
+  ],
+  'Customer Support': [
+    'Support Engineer',
+    'Customer Success Manager',
+    'Technical Support Specialist',
+    'Help Desk Analyst',
+    'Support Team Lead',
+  ],
+  'Legal': [
+    'Legal Counsel',
+    'Paralegal',
+    'Compliance Officer',
+    'Contract Specialist',
+  ],
+};
+
+export const DEPARTMENT_LIST = Object.keys(DEPARTMENTS);

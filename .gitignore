@@ -1,4 +1,5 @@
 analyse.md
 backend/node_modules/
+backend/.env
 client/node_modules/
 client/.env

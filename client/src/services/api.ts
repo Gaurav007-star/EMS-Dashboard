@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: `${import.meta.env.VITE_API_URL}/api` || "http://localhost:5000/api",
 });
 
 // Automatically inject JWT if stored in localStorage
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -15,7 +15,7 @@ api.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 /**
@@ -24,27 +24,27 @@ api.interceptors.request.use(
  */
 export const uploadToImageKit = async (file: File): Promise<string> => {
   // 1. Get credentials from backend
-  const authResponse = await api.get('/auth/imagekit-auth');
+  const authResponse = await api.get("/auth/imagekit-auth");
   const { signature, token, expire, publicKey } = authResponse.data;
 
   // 2. Build FormData payload
   const formData = new FormData();
-  formData.append('file', file);
-  formData.append('fileName', file.name);
-  formData.append('publicKey', publicKey);
-  formData.append('signature', signature);
-  formData.append('token', token);
-  formData.append('expire', expire.toString());
+  formData.append("file", file);
+  formData.append("fileName", file.name);
+  formData.append("publicKey", publicKey);
+  formData.append("signature", signature);
+  formData.append("token", token);
+  formData.append("expire", expire.toString());
 
   // 3. Post to ImageKit upload API
   const uploadResponse = await axios.post(
-    'https://upload.imagekit.io/api/v1/files/upload',
+    "https://upload.imagekit.io/api/v1/files/upload",
     formData,
     {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
-    }
+    },
   );
 
   return uploadResponse.data.url;

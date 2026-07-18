@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { EmployeeForm } from './EmployeeForm';
@@ -67,6 +68,7 @@ export const EmployeeDetails: React.FC = () => {
     if (!id || !currentUser) return;
 
     if (currentUser.role === 'Employee' && currentUser.id !== id) {
+      toast.error('Access Denied: You are restricted to viewing your own profile details only.');
       setError('Access Denied: You are restricted to viewing your own profile details only.');
       setLoading(false);
       return;
@@ -96,7 +98,7 @@ export const EmployeeDetails: React.FC = () => {
       }
     } catch (err: any) {
       console.error('Error fetching employee details:', err);
-      setError(err.response?.data?.message || 'Failed to retrieve employee record.');
+      toast.error(err.response?.data?.message || 'Failed to retrieve employee record.');
     } finally {
       setLoading(false);
     }

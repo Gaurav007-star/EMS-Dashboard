@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import api, { uploadToImageKit } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { Upload, Loader2, User, Mail, Phone, DollarSign, CalendarDays } from 'lucide-react';
@@ -83,6 +84,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         }
       } catch (err) {
         console.error('Error fetching manager list:', err);
+        toast.error('Failed to load manager list. Reporting manager options may be incomplete.');
       }
     };
 
@@ -130,7 +132,7 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         }
       } catch (err: any) {
         console.error('Error loading employee info:', err);
-        setSubmitError('Failed to load employee details.');
+        toast.error('Failed to load employee details.');
       } finally {
         setLoadingDetails(false);
       }
@@ -167,9 +169,10 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
     try {
       const imageUrl = await uploadToImageKit(file);
       setFormData((prev) => ({ ...prev, profileImage: imageUrl }));
+      toast.success('Profile image uploaded successfully');
     } catch (err: any) {
       console.error('ImageKit Upload Failed:', err);
-      setSubmitError('Failed to upload image. Please verify ImageKit keys in backend configuration.');
+      toast.error('Failed to upload image. Please verify ImageKit keys in backend configuration.');
     } finally {
       setImageUploading(false);
     }
@@ -209,17 +212,19 @@ export const EmployeeForm: React.FC<EmployeeFormProps> = ({
         if (res.data.success) {
           onSave();
           onClose();
+          toast.success('Employee details updated successfully');
         }
       } else {
         const res = await api.post('/employees', payload);
         if (res.data.success) {
           onSave();
           onClose();
+          toast.success('Employee created successfully');
         }
       }
     } catch (err: any) {
       console.error('Error saving employee:', err);
-      setSubmitError(err.response?.data?.message || 'Error occurred while saving employee record.');
+      toast.error(err.response?.data?.message || 'Error occurred while saving employee record.');
     } finally {
       setIsSubmitting(false);
     }

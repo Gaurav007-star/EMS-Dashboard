@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import api from "../services/api";
 import { Trash2, RotateCcw, Search, ArrowLeft, Calendar, User } from "lucide-react";
 import { Card } from "../components/ui/card";
@@ -52,7 +53,7 @@ export const Bin: React.FC = () => {
         if (res.data.pagination) setPagination(res.data.pagination);
       }
     } catch (err: any) {
-      setError(err.response?.data?.message || "Failed to fetch bin contents.");
+      toast.error(err.response?.data?.message || "Failed to fetch bin contents.");
     } finally {
       setLoading(false);
     }
@@ -70,9 +71,10 @@ export const Bin: React.FC = () => {
         setActionModal({ isOpen: false, type: "restore", employeeId: "", employeeName: "" });
         fetchBinEmployees();
         window.dispatchEvent(new Event('bin-updated'));
+        toast.success('Employee restored successfully');
       }
     } catch (err: any) {
-      setActionError(err.response?.data?.message || "Failed to restore employee.");
+      toast.error(err.response?.data?.message || "Failed to restore employee.");
     } finally {
       setIsProcessing(false);
     }
@@ -87,9 +89,10 @@ export const Bin: React.FC = () => {
         setActionModal({ isOpen: false, type: "permanent", employeeId: "", employeeName: "" });
         fetchBinEmployees();
         window.dispatchEvent(new Event('bin-updated'));
+        toast.success('Employee permanently deleted');
       }
     } catch (err: any) {
-      setActionError(err.response?.data?.message || "Failed to permanently delete.");
+      toast.error(err.response?.data?.message || "Failed to permanently delete.");
     } finally {
       setIsProcessing(false);
     }

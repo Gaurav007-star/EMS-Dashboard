@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import api from '../services/api';
 import { OrgTree } from '../components/OrgTree';
 import { Network, AlertTriangle, ArrowLeft } from 'lucide-react';
@@ -20,10 +21,11 @@ export const OrgHierarchy: React.FC = () => {
       const res = await api.get('/organization/tree');
       if (res.data.success) {
         setTreeData(res.data.tree);
+        toast.success('Org tree refreshed successfully');
       }
     } catch (err: any) {
       console.error('Error fetching org tree:', err);
-      setError(err.response?.data?.message || 'Failed to load organizational tree.');
+      toast.error(err.response?.data?.message || 'Failed to load organizational tree.');
     } finally {
       setLoading(false);
     }

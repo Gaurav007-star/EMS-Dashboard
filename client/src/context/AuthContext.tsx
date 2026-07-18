@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import toast from 'react-hot-toast';
 import api from '../services/api';
 
 export interface User {
@@ -50,10 +51,12 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             });
           } else {
             // Force logout if invalid
+            toast.error('Session expired. Please log in again.');
             handleLogout();
           }
         } catch (error) {
           console.error('Session restoration failed:', error);
+          toast.error('Session restoration failed. Please log in again.');
           handleLogout();
         }
       }
@@ -73,9 +76,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         localStorage.setItem('user', JSON.stringify(loggedUser));
         setToken(userToken);
         setUser(loggedUser);
+        toast.success('Logged in successfully');
       }
     } catch (error: any) {
       handleLogout();
+      toast.error(error.response?.data?.message || 'Login failed. Please verify credentials.');
       throw error.response?.data?.message || 'Login failed. Please verify credentials.';
     } finally {
       setLoading(false);

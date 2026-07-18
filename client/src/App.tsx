@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './components/theme-provider';
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -85,6 +86,35 @@ const App = () => {
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <AuthProvider>
           <AppContent />
+          <Toaster
+            position="top-right"
+            gutter={10}
+            toastOptions={{
+              duration: 4000,
+              style: {
+                background: 'var(--card)',
+                color: 'var(--foreground)',
+                border: '1px solid var(--border)',
+                borderRadius: 'calc(var(--radius) - 2px)',
+                fontFamily: 'var(--font-sans)',
+                fontSize: '13px',
+                padding: '12px 16px',
+                boxShadow: 'var(--shadow-lg)',
+              },
+              success: {
+                iconTheme: {
+                  primary: 'var(--chart-3)',
+                  secondary: 'var(--card)',
+                },
+              },
+              error: {
+                iconTheme: {
+                  primary: 'var(--destructive)',
+                  secondary: 'var(--card)',
+                },
+              },
+            }}
+          />
         </AuthProvider>
       </ThemeProvider>
     </Router>

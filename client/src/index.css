@@ -181,3 +181,27 @@
     cursor: pointer;
   }
 }
+
+/* ── React Hot Toast Custom Theme ────────────────────────────── */
+/* Ensure the toast container uses the website font */
+div[role="status"] {
+  font-family: var(--font-sans) !important;
+}
+
+/* Success toast background tint */
+div[role="status"] > div[data-type="success"] {
+  background: color-mix(in srgb, var(--chart-3) 12%, var(--card)) !important;
+  border: 1px solid color-mix(in srgb, var(--chart-3) 25%, var(--border)) !important;
+}
+
+/* Error toast background tint */
+div[role="status"] > div[data-type="error"] {
+  background: color-mix(in srgb, var(--destructive) 10%, var(--card)) !important;
+  border: 1px solid color-mix(in srgb, var(--destructive) 25%, var(--border)) !important;
+}
+
+/* Loading toast background tint */
+div[role="status"] > div[data-type="loading"] {
+  background: color-mix(in srgb, var(--primary) 8%, var(--card)) !important;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, var(--border)) !important;
+}

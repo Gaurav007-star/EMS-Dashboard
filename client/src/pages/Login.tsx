@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext';
 import {
   Briefcase,
@@ -43,7 +44,7 @@ export const Login: React.FC = () => {
     e.preventDefault();
     setError(null);
     if (!identity.trim() || !password.trim()) {
-      setError('Please enter both your credentials and password.');
+      toast.error('Please enter both your credentials and password.');
       return;
     }
     setIsSubmitting(true);

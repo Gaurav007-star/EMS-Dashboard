@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { EmployeeForm } from "./EmployeeForm";
@@ -162,9 +163,10 @@ export const EmployeeList: React.FC = () => {
         setDeleteModal({ isOpen: false, employeeId: '', employeeName: '' });
         fetchEmployees();
         window.dispatchEvent(new Event('bin-updated'));
+        toast.success('Employee moved to bin successfully');
       }
     } catch (err: any) {
-      setDeleteError(err.response?.data?.message || "Error occurred while deleting employee.");
+      toast.error(err.response?.data?.message || "Error occurred while deleting employee.");
     } finally {
       setIsDeleting(false);
     }

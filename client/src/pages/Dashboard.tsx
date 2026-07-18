@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import api from '../services/api';
 import { DashboardStats } from '../components/DashboardStats';
 import { DashboardCharts } from '../components/DashboardCharts';
@@ -56,7 +57,6 @@ export const Dashboard: React.FC = () => {
   });
   const [recentEmployees, setRecentEmployees] = useState<RecentEmployee[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -69,7 +69,7 @@ export const Dashboard: React.FC = () => {
         if (listRes.data.success)
           setRecentEmployees(listRes.data.employees.slice(0, 6));
       } catch (err: any) {
-        setError(err.response?.data?.message || 'Failed to load dashboard data.');
+        toast.error(err.response?.data?.message || 'Failed to load dashboard data.');
       } finally {
         setLoading(false);
       }
@@ -92,13 +92,6 @@ export const Dashboard: React.FC = () => {
         </div>
 
       </div>
-
-      {/* ─── Error Banner ─── */}
-      {error && (
-        <div className="rounded-lg border border-destructive/30 bg-destructive/8 text-destructive px-4 py-3 text-sm">
-          {error}
-        </div>
-      )}
 
       {/* ─── Stat Cards ─── */}
       <DashboardStats stats={stats} loading={loading} />
